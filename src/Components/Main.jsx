@@ -21,6 +21,7 @@ const Main = () => {
   const [colorList, setColorList] = useState([]);
   const [noteList, setNoteList] = useState([]);
   const [selected, setSelected] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const [filteredData, setFilteredData] = useState(mockData);
 
@@ -86,6 +87,35 @@ const Main = () => {
     setFilteredData(data);
   };
 
+  const handleSetSearchKeyword = (e) => {
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    let filtered = [];
+
+    filteredData.map((data) => {
+      return Object.keys(data).forEach((key) => {
+        if (typeof data[key] === 'number') {
+          if (data[key] === parseInt(searchKeyword, 10)) {
+            filtered.push(data);
+          }
+        }
+        if (data[key] === searchKeyword) {
+          filtered.push(data);
+        }
+      });
+    });
+
+    setFilteredData(filtered);
+  };
+
+  const handleSearchClear = () => {
+    setSearchKeyword('');
+    setFilteredData(data);
+  };
+
   return (
     <div className='Main'>
       <h2>Filtering playground</h2>
@@ -97,7 +127,11 @@ const Main = () => {
         handleSelectOnChange={handleSelectOnChange}
         handleSelectReset={handleSelectReset}
       />
-      <SearchBar />
+      <SearchBar
+        handleSetSearchKeyword={handleSetSearchKeyword}
+        handleSearchClick={handleSearchClick}
+        handleSearchClear={handleSearchClear}
+      />
       <DataTable filteredData={filteredData} columns={columns} />
     </div>
   );
