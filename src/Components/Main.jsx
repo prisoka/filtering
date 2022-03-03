@@ -42,16 +42,13 @@ const Main = () => {
     data.map((data) => {
       return Object.keys(data).forEach((key) => {
         if (key === 'name') {
-          data[key] !== '' ? names.push(data[key]) : names.push('empty name');
+          data[key] !== '' ? names.push(data[key]) : names.push('empty');
         } else if (key === 'color') {
-          data[key] !== ''
-            ? colors.push(data[key])
-            : colors.push('empty color');
+          data[key] !== '' ? colors.push(data[key]) : colors.push('empty');
         } else if (key === 'note') {
-          data[key] !== '' ? notes.push(data[key]) : notes.push('empty note');
+          data[key] !== '' ? notes.push(data[key]) : notes.push('empty');
         }
       });
-    });
     });
 
     setNameList(names);
@@ -64,6 +61,31 @@ const Main = () => {
     handleLists();
   }, [data]);
 
+  const handleSelectOnChange = (e) => {
+    let value = e.target.value;
+    let newData = [];
+
+    if (value === 'empty') {
+      value = '';
+    }
+
+    data.map((item) => {
+      return Object.values(item).forEach((val) => {
+        if (val === value) {
+          newData.push(item);
+        }
+      });
+    });
+
+    setSelected(value);
+    setFilteredData(newData);
+  };
+
+  const handleSelectReset = () => {
+    setSelected('');
+    setFilteredData(data);
+  };
+
   return (
     <div className='Main'>
       <h2>Filtering playground</h2>
@@ -72,6 +94,8 @@ const Main = () => {
         colorList={colorList}
         noteList={noteList}
         selected={selected}
+        handleSelectOnChange={handleSelectOnChange}
+        handleSelectReset={handleSelectReset}
       />
       <SearchBar />
       <DataTable filteredData={filteredData} columns={columns} />

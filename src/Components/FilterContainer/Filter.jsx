@@ -1,6 +1,12 @@
 import React from 'react';
 
-const Filter = ({ labelName, list, selected }) => {
+const Filter = ({
+  labelName,
+  list,
+  selected,
+  handleSelectOnChange,
+  handleSelectReset,
+}) => {
   return (
     <div className='SelectContainer'>
       <label>{labelName}</label>
@@ -8,14 +14,14 @@ const Filter = ({ labelName, list, selected }) => {
         value={selected}
         name={labelName}
         id={labelName}
-        onChange={() => {}}
+        onChange={handleSelectOnChange}
       >
         <option>Select your option</option>
         {list.map((val, idx) => (
           <option key={idx}>{val}</option>
         ))}
       </select>
-      <button onClick={() => {}}>Reset</button>
+      <button onClick={() => handleSelectReset()}>Reset</button>
     </div>
   );
 };
