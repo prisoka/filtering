@@ -1,10 +1,16 @@
 import React from 'react';
 
-const Filter = ({ labelName, list }) => {
+const Filter = ({ labelName, list, selected }) => {
   return (
-    <div>
+    <div className='SelectContainer'>
       <label>{labelName}</label>
-      <select value='' name={labelName} id={labelName} onChange={() => {}}>
+      <select
+        value={selected}
+        name={labelName}
+        id={labelName}
+        onChange={() => {}}
+      >
+        <option>Select your option</option>
         {list.map((val, idx) => (
           <option key={idx}>{val}</option>
         ))}

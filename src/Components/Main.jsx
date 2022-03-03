@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import DataTable from './DataTable/DataTable';
 import FilterContainer from './FilterContainer/FilterContainer';
 import SearchBar from './SearchBar/SearchBar';
+import './Main.css';
 
 const mockData = [
   { name: 'oranges', color: 'orange', code: 111, note: 'demo' },
@@ -19,6 +20,7 @@ const Main = () => {
   const [nameList, setNameList] = useState([]);
   const [colorList, setColorList] = useState([]);
   const [noteList, setNoteList] = useState([]);
+  const [selected, setSelected] = useState('');
 
   const [filteredData, setFilteredData] = useState(mockData);
 
@@ -26,7 +28,7 @@ const Main = () => {
     let allValues = [];
 
     data.map((item) => {
-      Object.values(item).forEach((val) => allValues.push(val));
+      return Object.values(item).forEach((val) => allValues.push(val));
     });
 
     setAllDataValues(allValues);
@@ -50,6 +52,7 @@ const Main = () => {
         }
       });
     });
+    });
 
     setNameList(names);
     setColorList(colors);
@@ -63,10 +66,12 @@ const Main = () => {
 
   return (
     <div className='Main'>
+      <h2>Filtering playground</h2>
       <FilterContainer
         nameList={nameList}
         colorList={colorList}
         noteList={noteList}
+        selected={selected}
       />
       <SearchBar />
       <DataTable filteredData={filteredData} columns={columns} />

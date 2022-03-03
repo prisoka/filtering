@@ -1,0 +1,35 @@
+.Main {
+  text-align: center;
+}
+.SelectContainer {
+  display: flex;
+  align-items: flex-end;
+  margin: 1rem;
+}
+label {
+  text-align: left;
+  min-width: 7.5rem;
+}
+select,
+input {
+  min-width: 30%;
+  padding: 0.25rem;
+}
+input {
+  max-width: 8rem;
+}
+table {
+  margin: 3rem 0 3rem 1rem;
+  border-collapse: collapse;
+  width: 90%;
+}
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 6px;
+}
+button {
+  padding: 0.25rem 0.75rem;
+  margin-left: 0.5rem;
+}

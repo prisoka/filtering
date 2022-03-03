@@ -1,8 +1,9 @@
 import React from 'react';
+import '../Main.css';
 
 const SearchBar = () => {
   return (
-    <form>
+    <form className='SelectContainer'>
       <label>Search </label>
       <input type='text' onChange={() => {}} />
       <button onClick={() => {}}>Search</button>
