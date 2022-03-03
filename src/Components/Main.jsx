@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
+import { initialDataState, dataReducer } from './data.state';
 import DataTable from './DataTable/DataTable';
 import FilterContainer from './FilterContainer/FilterContainer';
 import SearchBar from './SearchBar/SearchBar';
@@ -15,105 +15,52 @@ const mockData = [
 const columns = ['name', 'color', 'code', 'note'];
 
 const Main = () => {
-  const [data, setData] = useState(mockData);
-  const [allDataValues, setAllDataValues] = useState([]);
-  const [nameList, setNameList] = useState([]);
-  const [colorList, setColorList] = useState([]);
-  const [noteList, setNoteList] = useState([]);
-  const [selected, setSelected] = useState('');
-  const [searchKeyword, setSearchKeyword] = useState('');
+  const [data, setData] = useState([...mockData]);
+  const [dataState, dispatch] = useReducer(dataReducer, initialDataState);
 
-  const [filteredData, setFilteredData] = useState(mockData);
-
-  const handleAllDataValues = () => {
-    let allValues = [];
-
-    data.map((item) => {
-      return Object.values(item).forEach((val) => allValues.push(val));
-    });
-
-    setAllDataValues(allValues);
-  };
-
-  const handleLists = () => {
-    let names = [];
-    let colors = [];
-    let notes = [];
-
-    data.map((data) => {
-      return Object.keys(data).forEach((key) => {
-        if (key === 'name') {
-          data[key] !== '' ? names.push(data[key]) : names.push('empty');
-        } else if (key === 'color') {
-          data[key] !== '' ? colors.push(data[key]) : colors.push('empty');
-        } else if (key === 'note') {
-          data[key] !== '' ? notes.push(data[key]) : notes.push('empty');
-        }
-      });
-    });
-
-    setNameList(names);
-    setColorList(colors);
-    setNoteList(notes);
-  };
+  const {
+    allDataValues,
+    nameList,
+    colorList,
+    noteList,
+    selected,
+    filteredData,
+    searchKeyword,
+  } = dataState;
 
   useEffect(() => {
-    handleAllDataValues();
-    handleLists();
-  }, [data]);
+    dispatch({ type: 'set_filtered_data', payload: { data } });
+    dispatch({ type: 'set_all_data_values', payload: { data } });
+    dispatch({ type: 'set_name_list', payload: { data } });
+    dispatch({ type: 'set_color_list', payload: { data } });
+    dispatch({ type: 'set_note_list', payload: { data } });
+  }, []);
 
   const handleSelectOnChange = (e) => {
     let value = e.target.value;
-    let newData = [];
-
-    if (value === 'empty') {
-      value = '';
-    }
-
-    data.map((item) => {
-      return Object.values(item).forEach((val) => {
-        if (val === value) {
-          newData.push(item);
-        }
-      });
-    });
-
-    setSelected(value);
-    setFilteredData(newData);
+    dispatch({ type: 'handle_select_change', payload: { data, value } });
   };
 
   const handleSelectReset = () => {
-    setSelected('');
-    setFilteredData(data);
+    dispatch({ type: 'handle_select_reset', payload: { data } });
   };
 
   const handleSetSearchKeyword = (e) => {
-    setSearchKeyword(e.target.value);
+    let value = e.target.value;
+    dispatch({ type: 'handle_set_search_keyword', payload: { value } });
   };
 
   const handleSearchClick = (e) => {
     e.preventDefault();
-    let filtered = [];
-
-    filteredData.map((data) => {
-      return Object.keys(data).forEach((key) => {
-        if (typeof data[key] === 'number') {
-          if (data[key] === parseInt(searchKeyword, 10)) {
-            filtered.push(data);
-          }
-        }
-        if (data[key] === searchKeyword) {
-          filtered.push(data);
-        }
-      });
+    dispatch({
+      type: 'handle_search',
+      payload: { data: filteredData },
     });
-
-    setFilteredData(filtered);
   };
 
-  const handleSearchClear = () => {
-    setSearchKeyword('');
-    setFilteredData(data);
+  const handleSearchClear = (e) => {
+    e.preventDefault();
+    dispatch({ type: 'handle_clear_search', payload: { data } });
   };
 
   return (
