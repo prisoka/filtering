@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import Filter from './Filter';
 
-const FilterContainer = () => {
+const FilterContainer = ({ nameList, colorList, noteList }) => {
   return (
-    <div>FilterContainer</div>
-  )
-}
+    <div>
+      <Filter labelName='Name' list={nameList} />
+      <Filter labelName='Color' list={colorList} />
+      <Filter labelName='Note' list={noteList} />
+    </div>
+  );
+};
 
-export default FilterContainer
+export default FilterContainer;
