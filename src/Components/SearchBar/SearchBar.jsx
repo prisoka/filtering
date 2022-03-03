@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
 
 const SearchBar = () => {
   return (
-    <div>SearchBar</div>
-  )
-}
+    <form>
+      <label>Search </label>
+      <input type='text' onChange={() => {}} />
+      <button onClick={() => {}}>Search</button>
+      <button onClick={() => {}}>Clear</button>
+    </form>
+  );
+};
 
-export default SearchBar
+export default SearchBar;

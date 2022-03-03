@@ -15,10 +15,22 @@ const columns = ['name', 'color', 'code', 'note'];
 
 const Main = () => {
   const [data, setData] = useState(mockData);
-  const [filteredData, setFilteredData] = useState(mockData);
+  const [allDataValues, setAllDataValues] = useState([]);
   const [nameList, setNameList] = useState([]);
   const [colorList, setColorList] = useState([]);
   const [noteList, setNoteList] = useState([]);
+
+  const [filteredData, setFilteredData] = useState(mockData);
+
+  const handleAllDataValues = () => {
+    let allValues = [];
+
+    data.map((item) => {
+      Object.values(item).forEach((val) => allValues.push(val));
+    });
+
+    setAllDataValues(allValues);
+  };
 
   const handleLists = () => {
     let names = [];
@@ -45,6 +57,7 @@ const Main = () => {
   };
 
   useEffect(() => {
+    handleAllDataValues();
     handleLists();
   }, [data]);
 
