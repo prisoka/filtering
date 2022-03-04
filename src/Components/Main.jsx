@@ -59,8 +59,7 @@ const Main = () => {
   };
 
   const handleSearchClear = (e) => {
-    e.preventDefault();
-    dispatch({ type: 'handle_clear_search', payload: { data } });
+    dispatch({ type: 'handle_search_reset', payload: { data } });
   };
 
   return (

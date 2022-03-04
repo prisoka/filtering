@@ -19,7 +19,7 @@ const ACTIONS = {
   HANDLE_SELECT_RESET: 'handle_select_reset',
   HANDLE_SET_SEARCH_KEYWORD: 'handle_set_search_keyword',
   HANDLE_SEARCH: 'handle_search',
-  HANDLE_CLEAR_SEARCH: 'handle_clear_search',
+  HANDLE_SEARCH_RESET: 'handle_search_reset',
 };
 
 const dataReducer = (state, action) => {
@@ -161,7 +161,7 @@ const dataReducer = (state, action) => {
       return { ...state, filteredData: filtered };
     }
 
-    case ACTIONS.HANDLE_CLEAR_SEARCH: {
+    case ACTIONS.HANDLE_SEARCH_RESET: {
       const { data } = action.payload;
       const newData = data;
       return { ...state, searchKeyword: '', filteredData: newData };

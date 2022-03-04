@@ -8,10 +8,10 @@ const SearchBar = ({
 }) => {
   return (
     <form className='SelectContainer'>
-      <label>Search </label>
+      <label>Search</label>
       <input type='text' onChange={handleSetSearchKeyword} />
       <button onClick={handleSearchClick}>Search</button>
-      <button onClick={handleSearchClear}>Clear</button>
+      <button onClick={handleSearchClear}>Reset</button>
     </form>
   );
 };
